@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Daylight — Focus Planner</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <p>DAYLIGHT</p>
+      <h1>Make room for what matters.</h1>
+      <p>A little clarity goes a long way. Pick a place to begin.</p>
+    </header>
+
+    <main>
+      <h2>Today’s list</h2>
+
+      <form id="taskForm">
+        <label for="taskInput">What do you want to make time for?</label>
+        <input id="taskInput" type="text" placeholder="Write a task…" required />
+        <button type="submit">Add task</button>
+      </form>
+
+      <ul id="taskList"></ul>
+    </main>
+  </body>
+</html>
