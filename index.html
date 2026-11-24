@@ -3,27 +3,129 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Daylight — Focus Planner</title>
+    <title>Daylight — Your Daily Space</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
   </head>
+
   <body>
-    <header>
-      <p>DAYLIGHT</p>
-      <h1>Make room for what matters.</h1>
-      <p>A little clarity goes a long way. Pick a place to begin.</p>
-    </header>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#today"><span class="brand-mark">d</span> daylight</a>
 
-    <main>
-      <h2>Today’s list</h2>
+        <p class="nav-label">YOUR SPACE</p>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a class="nav-link active" href="#today"><span>◷</span> Today</a>
+          <a class="nav-link" href="#tasks"><span>☷</span> Tasks</a>
+          <a class="nav-link" href="#habits"><span>✳</span> Habits</a>
+          <a class="nav-link" href="#notes"><span>▤</span> Notes</a>
+        </nav>
 
-      <form id="taskForm">
-        <label for="taskInput">What do you want to make time for?</label>
-        <input id="taskInput" type="text" placeholder="Write a task…" required />
-        <button type="submit">Add task</button>
-      </form>
+        <div class="sidebar-bottom">
+          <div class="avatar"><img src="profile.jpg" alt="Profile photo" /></div>
+          <div><strong>Your workspace</strong><small>A little at a time</small></div>
+        </div>
+      </aside>
 
-      <ul id="taskList"></ul>
-    </main>
+      <main class="main-content" id="today">
+        <header class="topbar">
+          <span class="breadcrumb">My workspace <span>/</span> Today</span>
+          <time id="todayDate"></time>
+        </header>
+
+        <section class="welcome">
+          <div>
+            <p class="eyebrow">✳ &nbsp; A FRESH PAGE</p>
+            <h1>Make today<br /><span>your own.</span></h1>
+            <p class="welcome-copy">Plan a little, focus gently, and notice what you get done.</p>
+          </div>
+          <div class="sun-art" aria-hidden="true">☼</div>
+        </section>
+
+        <section class="overview-grid" aria-label="Today's progress">
+          <article class="overview-card">
+            <span class="overview-icon">✓</span>
+            <div><p>Tasks finished</p><strong id="taskProgress">0 of 0</strong></div>
+          </article>
+          <article class="overview-card">
+            <span class="overview-icon">◷</span>
+            <div><p>Focus minutes</p><strong id="focusTotal">0 min</strong></div>
+          </article>
+          <article class="overview-card">
+            <span class="overview-icon">✳</span>
+            <div><p>Habits today</p><strong id="habitProgress">0 of 4</strong></div>
+          </article>
+        </section>
+
+        <div class="dashboard-grid">
+          <section class="panel tasks-panel" id="tasks">
+            <div class="panel-heading">
+              <div><p class="eyebrow">YOUR PRIORITIES</p><h2>Today’s tasks</h2></div>
+              <span class="small-count" id="taskSummary">0 tasks</span>
+            </div>
+
+            <form id="taskForm" class="task-form">
+              <label class="visually-hidden" for="taskInput">New task</label>
+              <input id="taskInput" type="text" maxlength="100" placeholder="What would you like to get done?" required />
+              <label class="visually-hidden" for="taskPriority">Task priority</label>
+              <select id="taskPriority">
+                <option value="normal">Normal</option>
+                <option value="high">High</option>
+                <option value="low">Low</option>
+              </select>
+              <button type="submit">Add task <span>＋</span></button>
+            </form>
+
+            <div class="task-filters" aria-label="Filter tasks">
+              <button type="button" class="filter-button active" data-filter="all">All</button>
+              <button type="button" class="filter-button" data-filter="open">To do</button>
+              <button type="button" class="filter-button" data-filter="done">Done</button>
+              <button type="button" id="clearCompleted" class="clear-button">Clear completed</button>
+            </div>
+
+            <ul id="taskList" class="task-list" aria-live="polite"></ul>
+            <p id="emptyTasks" class="empty-state">Your list is clear. Add one small thing to begin.</p>
+          </section>
+
+          <section class="panel habits-panel" id="habits">
+            <div class="panel-heading">
+              <div><p class="eyebrow">TINY, STEADY WINS</p><h2>Daily habits</h2></div>
+              <span class="small-count" id="habitBadge">0 / 4</span>
+            </div>
+
+            <ul class="habit-list" id="habitList">
+              <li><label><input type="checkbox" data-habit="water" /><span class="habit-symbol">◌</span><span>Drink some water</span></label></li>
+              <li><label><input type="checkbox" data-habit="move" /><span class="habit-symbol">↗</span><span>Move your body</span></label></li>
+              <li><label><input type="checkbox" data-habit="read" /><span class="habit-symbol">▤</span><span>Read for a while</span></label></li>
+              <li><label><input type="checkbox" data-habit="outside" /><span class="habit-symbol">☼</span><span>Step outside</span></label></li>
+            </ul>
+          </section>
+
+          <section class="panel focus-panel">
+            <div class="panel-heading">
+              <div><p class="eyebrow">A MOMENT FOR YOU</p><h2>Focus time</h2></div>
+              <span class="focus-tag">25 MIN</span>
+            </div>
+            <p class="focus-intro">Choose one thing. Give it your attention.</p>
+            <div class="timer-display" id="timerDisplay" aria-live="polite">25:00</div>
+            <div class="timer-controls">
+              <button type="button" id="startTimer">Start focus</button>
+              <button type="button" id="resetTimer" class="reset-button">Reset</button>
+            </div>
+          </section>
+
+          <section class="panel notes-panel" id="notes">
+            <div class="panel-heading">
+              <div><p class="eyebrow">A THOUGHT TO KEEP</p><h2>Daily note</h2></div>
+              <span class="saved-label" id="noteStatus">Saved locally</span>
+            </div>
+            <label class="visually-hidden" for="dailyNote">Write a note for today</label>
+            <textarea id="dailyNote" rows="4" placeholder="What’s on your mind today?"></textarea>
+          </section>
+        </div>
+
+        <footer class="page-footer">Small steps count <span>♥</span></footer>
+      </main>
+    </div>
   </body>
 </html>
